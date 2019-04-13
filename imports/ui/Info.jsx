@@ -2,28 +2,18 @@ import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import Links from '../api/links';
 
-class Info extends Component {
-  render() {
-    const links = this.props.links.map(
-      link => this.makeLink(link)
-    );
+const Link = ({_id, url, title}) => (
+  <li key={_id}>
+    <a href={url} target="_blank">{title}</a> ({url})
+  </li>
+)
 
-    return (
-      <div>
-        <h2>Learn Meteor!</h2>
-        <ul>{ links }</ul>
-      </div>
-    );
-  }
-
-  makeLink(link) {
-    return (
-      <li key={link._id}>
-        <a href={link.url} target="_blank">{link.title}</a>
-      </li>
-    );
-  }
-}
+const Info = (props) => (
+  <div>
+    <h2>Learn Meteor!</h2>
+    <ul>{ props.links.map(link => (<Link {...link}/>)) }</ul>
+  </div>
+)
 
 export default InfoContainer = withTracker(() => {
   return {
